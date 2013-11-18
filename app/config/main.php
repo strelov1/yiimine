@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'Template.loc',
+    'name' => 'Yiimine',
     'language' => 'ru',
 
     // preloading 'log' component
@@ -129,7 +129,7 @@ return array(
             'rules' => require(dirname(__FILE__) . '/_url.php'),
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=template',
+            'connectionString' => 'mysql:host=localhost;dbname=yiimine',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
