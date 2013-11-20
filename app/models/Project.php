@@ -15,11 +15,33 @@
  * @property string $updated_date
  */
 class Project extends CActiveRecord {
+    const STATUS_CLOSED = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_ARCHIVE = 2;
+
     /**
      * @return string the associated database table name
      */
     public function tableName() {
         return 'project';
+    }
+
+    public function behaviors() {
+        return array(
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created_date',
+                'updateAttribute' => 'updated_date',
+            ),
+        );
+    }
+
+    public function scopes() {
+        return array(
+            'active' => array(
+                'condition' => 'status_id = '.self::STATUS_ACTIVE,
+            ),
+        );
     }
 
     /**
@@ -29,9 +51,10 @@ class Project extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('identifier, title, author_id, created_date', 'required'),
+            array('identifier, title', 'required'),
             array('status_id, is_public', 'numerical', 'integerOnly' => true),
-            array('identifier', 'length', 'max' => 10),
+            array('identifier', 'length', 'max' => 10, 'min' => 3),
+            array('identifier', 'unique'),
             array('title', 'length', 'max' => 50),
             array('author_id', 'length', 'max' => 11),
             array('description, updated_date', 'safe'),
@@ -62,7 +85,7 @@ class Project extends CActiveRecord {
             'title' => 'Название',
             'description' => 'Описание',
             'status_id' => 'Статус',
-            'is_public' => 'Открытый?',
+            'is_public' => 'Публичный проект',
             'author_id' => 'Автор',
             'created_date' => 'Дата создания',
             'updated_date' => 'Дата обновления',
@@ -109,5 +132,21 @@ class Project extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+
+    protected function beforeSave() {
+        if(parent::beforeSave()) {
+            if($this->isNewRecord) {
+                $this->status_id = self::STATUS_ACTIVE;
+                $this->author_id = Yii::app()->user->id;
+            }
+
+            return true;
+        } else
+            return false;
+    }
+
+    public static function getActiveProjects() {
+        return CHtml::listData(self::model()->active()->findAll(), 'id', 'title');
     }
 }

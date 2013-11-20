@@ -184,4 +184,8 @@ class User extends CActiveRecord {
     public function setLastvisit($value) {
         $this->lastvisit_at = date('Y-m-d H:i:s', $value);
     }
+
+    public static function getActiveUsers() {
+        return CHtml::listData(self::model()->active()->findAll(), 'id', 'username');
+    }
 }

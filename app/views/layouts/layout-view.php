@@ -12,7 +12,6 @@
     <![endif]-->
 
     <?php
-    regCssFile(array('main'));
     regJsFile(array('jquery.translit-0.1.3', 'main'))
     ?>
 
@@ -59,8 +58,10 @@
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
                         'items' => array(
-                            array('label' => 'Проекты', 'visible' => !Yii::app()->user->isGuest, 'items' => $this->projectMenu),
-                            array('label' => 'Задачи', 'visible' => !Yii::app()->user->isGuest, 'items' => $this->issueMenu),
+                            array('label' => 'Проекты', 'url' => array('/project/index'), 'visible' => !Yii::app()->user->isGuest, 'items' => $this->projectMenu),
+                            array('label'=>'Списки', 'items'=> array(
+                                array('label' => 'Сети заведений', 'url' => array('/admin/net'), 'visible' => !Yii::app()->user->isGuest),
+                            )),
                             array('label' => 'Пользователи', 'url' => array('/user/admin'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => 'Права доступа', 'url' => array('/rights'), 'visible' => !Yii::app()->user->isGuest),
                         )

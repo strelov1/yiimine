@@ -34,6 +34,7 @@ class TbDatePicker extends CInputWidget
 	{
 		$this->htmlOptions['type'] = 'text';
 		$this->htmlOptions['autocomplete'] = 'off';
+        $this->htmlOptions['class'] = 'span2';
 
 		if (!isset($this->options['language']))
 			$this->options['language'] = substr(Yii::app()->getLanguage(), 0, 2);

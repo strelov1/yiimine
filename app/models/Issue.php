@@ -19,11 +19,34 @@
  * @property string $updated_date
  */
 class Issue extends CActiveRecord {
+    const TRACKER_BUG = 1;
+    const TRACKER_TASK = 2;
+
+    const STATUS_NEW = 1;
+    const STATUS_IN_WORK = 2;
+    const STATUS_REVIEW = 3;
+    const STATUS_CLOSED = 4;
+    const STATUS_CANT_REPRODUCE = 5;
+
+    const PRIORITY_HIGH = 1;
+    const PRIORITY_MEDIUM = 2;
+    const PRIORITY_LOW = 3;
+
     /**
      * @return string the associated database table name
      */
     public function tableName() {
         return 'issue';
+    }
+
+    public function behaviors() {
+        return array(
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created_date',
+                'updateAttribute' => 'updated_date',
+            ),
+        );
     }
 
     /**
@@ -33,7 +56,7 @@ class Issue extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('project_id, tracker_id, status_id, priority_id, subject, description, author_id, created_date', 'required'),
+            array('project_id, tracker_id, priority_id, subject, description', 'required'),
             array('tracker_id, status_id, priority_id, done_ratio', 'numerical', 'integerOnly' => true),
             array('project_id, assigned_to_id, author_id', 'length', 'max' => 11),
             array('subject', 'length', 'max' => 50),
@@ -123,5 +146,47 @@ class Issue extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+
+    public static function getTrackerOptions() {
+        return array(
+            self::TRACKER_BUG => 'Баг',
+            self::TRACKER_TASK => 'Задача',
+        );
+    }
+
+    public static function getPriorityOptions() {
+        return array(
+            self::PRIORITY_HIGH => 'Высокий',
+            self::PRIORITY_MEDIUM => 'Средний',
+            self::PRIORITY_LOW => 'Низкий',
+        );
+    }
+
+    public static function getDoneRatioOptions() {
+        return array(
+            10 => '10',
+            20 => '20',
+            30 => '30',
+            40 => '40',
+            50 => '50',
+            60 => '60',
+            70 => '70',
+            80 => '80',
+            90 => '90',
+            100 => '100',
+        );
+    }
+
+    protected function beforeSave() {
+        if(parent::beforeSave()) {
+            if($this->isNewRecord) {
+                $this->status_id = self::STATUS_NEW;
+                $this->author_id = Yii::app()->user->id;
+            }
+
+            return true;
+        } else
+            return false;
     }
 }

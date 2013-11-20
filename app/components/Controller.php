@@ -5,6 +5,8 @@
  */
 class Controller extends CController {
     public $pageDescription;
+    public $projectMenu = array();
+    public $issueMenu = array();
     /**
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
      * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
@@ -20,6 +22,36 @@ class Controller extends CController {
      * for more details on how to specify this property.
      */
     public $breadcrumbs = array();
+
+    public function init() {
+        parent::init();
+        $this->_setProjectMenu();
+        $this->_setIssueMenu();
+    }
+
+    private function _setProjectMenu() {
+        $this->projectMenu[] = array('label' => 'Все', 'url' => array('/project/index'));
+        $this->projectMenu[] = array('label' => 'Создать', 'url' => array('/project/create'));
+        $this->projectMenu[] = '---';
+        $this->projectMenu[] = array('label' => 'Последние');
+
+        $sql = 'SELECT * FROM project ORDER BY id DESC LIMIT 3';
+        $projects = db()->createCommand($sql)->queryAll();
+        foreach($projects as $k=>$proj)
+            $this->projectMenu[] = array('label' => $proj['title'], 'url' => array('/project/view', 'url' => $proj['identifier']));
+    }
+
+    private function _setIssueMenu() {
+        $this->issueMenu[] = array('label' => 'Создать', 'url' => array('/issue/create'));
+        $this->issueMenu[] = '---';
+        $this->issueMenu[] = array('label' => 'Назначенные мне');
+
+        $sql = 'SELECT * FROM issue WHERE assigned_to_id = '.user()->id.' ORDER BY priority_id ASC LIMIT 5';
+        $issues = db()->createCommand($sql)->queryAll();
+        foreach($issues as $k=>$issue)
+            $this->issueMenu[] = array('label' => $issue['subject'], 'url' => array('/issue/view', 'id' => $issue['id']));
+    }
+
 
     /**
      * Loads the requested data model.
