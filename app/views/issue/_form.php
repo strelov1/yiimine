@@ -20,7 +20,7 @@
 
         <?php echo $form->markdownEditorRow($model, 'description', array('height' => '200px')); ?>
 
-        <?php echo $form->dropDownListRow($model, 'done_ratio', Issue::getDoneRatioOptions(), array('class' => 'span1')); ?>
+        <?php echo $form->dropDownListRow($model, 'done_ratio', Issue::getDoneRatioOptions(), array('class' => 'span1', 'empty' => ' - ')); ?>
 
         <?php echo $form->datepickerRow($model, 'due_date', array(
                 'options' => array('language' => 'ru', 'format' => 'dd/mm/yyyy'),

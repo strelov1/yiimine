@@ -177,6 +177,16 @@ class Issue extends CActiveRecord {
             100 => '100',
         );
     }
+    
+    public static function getStatusOptions() {
+        return array(
+            self::STATUS_NEW => 'Новый',
+            self::STATUS_IN_WORK => 'В работе',
+            self::STATUS_REVIEW => 'На проверку',
+            self::STATUS_CANT_REPRODUCE => 'Не повторить',
+            self::STATUS_CLOSED => 'Закрытый',
+        );
+    }
 
     protected function beforeSave() {
         if(parent::beforeSave()) {

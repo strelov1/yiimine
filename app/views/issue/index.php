@@ -9,6 +9,8 @@ $this->menu = array(
     array('label' => 'Создать задачу', 'url' => $this->createUrl('create')),
 );
 
+echo "<h1>Все задачи проекта {$model->project->title}</h1>";
+
 $this->renderPartial('application.views.common._flashMessage');
 
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -20,7 +22,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array(
             'name' => 'status_id',
             'type' => 'html',
-            'filter' => false,
+            'filter' => Issue::getStatusOptions(),
             'value' => function($data) {
                     if($data->status_id == Issue::STATUS_NEW)
                         return '<span class="badge badge-success">new</span>';
@@ -34,11 +36,17 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                         return '<span class="badge">review</span>';
                 }
         ),
-        'subject',
+        array(
+            'name' => 'subject',
+            'type' => 'html',
+            'value' => function($data) {
+                return l($data->subject, array('/issue/view', 'id' => $data->id));
+            }
+        ),
         array(
             'name' => 'tracker_id',
             'type' => 'html',
-            'filter' => false,
+            'filter' => Issue::getTrackerOptions(),
             'value' => function($data) {
                 if($data->tracker_id == Issue::TRACKER_BUG)
                     return '<span class="label label-important">bug</span>';
@@ -49,7 +57,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array(
             'name' => 'priority_id',
             'type' => 'html',
-            'filter' => false,
+            'filter' => Issue::getPriorityOptions(),
             'value' => function($data) {
                     if($data->priority_id == Issue::PRIORITY_HIGH)
                         return '<span class="label label-important">high</span>';
