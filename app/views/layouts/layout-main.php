@@ -60,7 +60,7 @@
                         'class' => 'bootstrap.widgets.TbMenu',
                         'items' => array(
                             array('label' => 'Проекты', 'visible' => !Yii::app()->user->isGuest, 'items' => $this->projectMenu),
-                            array('label' => 'Задачи', 'visible' => !Yii::app()->user->isGuest, 'items' => $this->issueMenu),
+                            array('label' => 'Задачи', 'visible' => !Yii::app()->user->isGuest && user()->hasState('projectId'), 'items' => $this->issueMenu),
                             array('label' => 'Пользователи', 'url' => array('/user/admin'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => 'Права доступа', 'url' => array('/rights'), 'visible' => !Yii::app()->user->isGuest),
                         )

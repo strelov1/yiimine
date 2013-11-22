@@ -30,6 +30,24 @@ class IssueController extends CommonController {
         $this->delete('Issue', $id);
     }
     
+    public function actionView($id) {
+        $model = $this->loadModel('Issue', $id);
+
+        $comments = new CActiveDataProvider('IssueComment', array(
+            'criteria' => array(
+                'condition' => 'issue_id = '.(int)$id,
+            ),
+            'sort' => array(
+                'defaultOrder' => 'created_date DESC',
+            ),
+            'pagination' => array(
+                'pageSize' => 20,
+            ),
+        ));
+
+        $this->render('view', array('model' => $model, 'comments' => $comments));
+    }
+
     private function _saveModel($model, $actionText) {
         if(isset($_POST['Issue'])) {
             $model->attributes = $_POST['Issue'];

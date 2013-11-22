@@ -12,3 +12,10 @@ $this->renderPartial('application.views.common._flashMessage');
 ?>
 
 <h1>Обзор проекта <?= $model->title; ?></h1>
+
+<p>Добавить на страницу:</p>
+<ul>
+    <li>Кнопку "Добавить задачу"</li>
+    <li>Новые / В работе / Закрытые задачи</li>
+    <li>Лог действий</li>
+</ul>

@@ -68,6 +68,16 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 }
         ),
         array(
+            'name' => 'created_date',
+            'header' => 'Обновлено',
+            'value' => function($data) {
+                if(empty($data->updated_date))
+                    return date('d/m/Y H:i', strtotime($data->created_date));
+                else
+                    return date('d/m/Y H:i', strtotime($data->updated_date));
+            }
+        ),
+        array(
             'class' => 'CButtonColumn',
             'template' => '{update} {delete}'
         ),
@@ -79,4 +89,5 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     #yw0_c1 { width: 50px; }
     #yw0_c3 { width: 60px; }
     #yw0_c4 { width: 60px; }
+    #yw0_c5 { width: 120px; }
 </style>
