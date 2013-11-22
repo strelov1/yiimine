@@ -1,4 +1,10 @@
-<?php 
+<?php
+$this->breadcrumbs = array(
+    $model->project->title => array('/project/view', 'url' => $model->project->identifier),
+    'Задачи' => array('/issue'),
+    $model->subject,
+);
+
 $this->menu = array(
     array('label' => $model->project->title, 'itemOptions' => array('class' => 'nav-header')),
     array('label' => 'Обзор', 'url' => $this->createUrl('/project/view', array('url' => $model->project->identifier))),

@@ -1,4 +1,9 @@
 <?php
+$this->breadcrumbs = array(
+    $model->project->title => array('/project/view', 'url' => $model->project->identifier),
+    'Задачи',
+);
+
 $this->menu = array(
     array('label' => $model->project->title, 'itemOptions' => array('class' => 'nav-header')),
     array('label' => 'Обзор', 'url' => $this->createUrl('/project/view', array('url' => $model->project->identifier))),
@@ -9,7 +14,8 @@ $this->menu = array(
     array('label' => 'Создать задачу', 'url' => $this->createUrl('create')),
 );
 
-echo "<h1>Все задачи проекта {$model->project->title}</h1>";
+echo "<h1 style='float: left;'>Все задачи проекта {$model->project->title}</h1>";
+echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . l('Создать', array('/issue/create'), array('class' => 'btn', 'style' => 'margin-top: 15px;'));
 
 $this->renderPartial('application.views.common._flashMessage');
 
