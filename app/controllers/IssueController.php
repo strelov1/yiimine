@@ -2,12 +2,12 @@
 class IssueController extends CommonController {
     public function actionIndex() {
         $this->render('index', array(
-            'model' => $this->listing('Issue', array('project_id' => user()->getState('projectId'))),
+            'model' => $this->listing('Issue', array('project_id' => User::getLastProjectId())),
         ));
     }
 
     public function actionCreate() {
-        $project = $this->loadModel('Project', user()->getState('projectId'));
+        $project = $this->loadModel('Project', User::getLastProjectId());
         $model = new Issue();
         $model->project_id = $project->id;
         $model->tracker_id = Issue::TRACKER_BUG;
@@ -18,7 +18,7 @@ class IssueController extends CommonController {
     }
     
     public function actionUpdate($id) {
-        $project = $this->loadModel('Project', user()->getState('projectId'));
+        $project = $this->loadModel('Project', User::getLastProjectId());
         $model = $this->loadModel('Issue', $id);
         
         $this->_saveModel($model, 'обновлена');
@@ -46,6 +46,20 @@ class IssueController extends CommonController {
         ));
 
         $this->render('view', array('model' => $model, 'comments' => $comments));
+    }
+
+    public function actionClose($id) {
+        $issue = $this->loadModel('Issue', (int)$id);
+
+        $comment = new IssueComment();
+        $comment->issue_id = $id;
+
+        if(isset($_POST['IssueComment'])) {
+            user()->setFlash('success', 'Задача закрыта - ' . $issue->subject);
+            Yii::app()->end();
+        }
+
+        $this->renderPartial('close', array('model' => $comment, 'issue' => $issue));
     }
 
     private function _saveModel($model, $actionText) {

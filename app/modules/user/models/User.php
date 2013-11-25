@@ -21,6 +21,7 @@ class User extends CActiveRecord {
      * @var integer $status
      * @var timestamp $create_at
      * @var timestamp $lastvisit_at
+     * @var timestamp $last_project_id
      */
 
     /**
@@ -56,7 +57,7 @@ class User extends CActiveRecord {
             array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
             array('username, email, superuser, status', 'required'),
-            array('superuser, status', 'numerical', 'integerOnly' => true),
+            array('superuser, status, last_project_id', 'numerical', 'integerOnly' => true),
             array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on' => 'search'),
         ) : ((Yii::app()->user->id == $this->id) ? array(
             array('username, email', 'required'),
@@ -93,6 +94,7 @@ class User extends CActiveRecord {
             'lastvisit_at' => UserModule::t("Last visit"),
             'superuser' => UserModule::t("Superuser"),
             'status' => UserModule::t("Status"),
+            'last_project_id' => 'Последний открытый проект'
         );
     }
 
@@ -187,5 +189,18 @@ class User extends CActiveRecord {
 
     public static function getActiveUsers() {
         return CHtml::listData(self::model()->active()->findAll(), 'id', 'username');
+    }
+
+    public static function setLastProjectId($projectId) {
+        $sql = 'UPDATE users SET last_project_id = :projectId WHERE id = ' . Yii::app()->user->id;
+        $command = db()->createCommand($sql);
+        $command->bindParam(':projectId', $projectId, PDO::PARAM_INT);
+        $command->execute();
+    }
+
+    public static function getLastProjectId() {
+        $sql = 'SELECT last_project_id FROM users WHERE id = '.user()->id;
+        $projectId = db()->createCommand($sql)->queryScalar();
+        return $projectId;
     }
 }

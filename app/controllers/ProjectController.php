@@ -27,7 +27,7 @@ class ProjectController extends CommonController {
         if(!$model)
             throw new CHttpException(404, 'Такой страницы не существует');
 
-        Yii::app()->user->setState('projectId', $model->id);
+        User::setLastProjectId($model->id);
 
         $this->render('view', array('model' => $model));
     }

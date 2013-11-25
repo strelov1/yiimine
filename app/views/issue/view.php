@@ -15,6 +15,8 @@ $this->menu = array(
     array('label' => 'Создать задачу', 'url' => $this->createUrl('create')),
 );
 
+$this->renderPartial('application.views.common._flashMessage');
+
 $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
         'title' => $model->subject,
         'headerIcon' => 'icon-tasks',
@@ -24,7 +26,7 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
                 'type' => 'primary',
                 // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                 'buttons' => array(
-                    array('label' => 'Закрыть', 'url' => array('/issue/close')),
+                    array('label' => 'Закрыть', 'url' => array('/issue/close', 'id' => $model->id), 'htmlOptions' => array('class' => 'closeIssueBtn')),
                     // this makes it split :)
                     array(
                         'items' => array(
