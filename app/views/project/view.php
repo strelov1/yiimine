@@ -5,7 +5,7 @@
     array('label' => 'Wiki', 'url' => $this->createUrl('/wiki')),
     array('label' => 'Файлы', 'url' => $this->createUrl('/file')),
     '---',
-    array('label' => 'Настройки', 'url' => $this->createUrl('create')),
+    array('label' => 'Настройки', 'url' => $this->createUrl('update', array('id' => $model->id))),
 );
 
 $this->renderPartial('application.views.common._flashMessage');

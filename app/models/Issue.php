@@ -32,6 +32,8 @@ class Issue extends CActiveRecord {
     const PRIORITY_MEDIUM = 2;
     const PRIORITY_LOW = 3;
 
+    public $tmpFiles;
+
     /**
      * @return string the associated database table name
      */
@@ -61,6 +63,7 @@ class Issue extends CActiveRecord {
             array('project_id, assigned_to_id, author_id', 'length', 'max' => 11),
             array('subject', 'length', 'max' => 50),
             array('due_date, updated_date', 'safe'),
+            array('tmpFiles', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, project_id, tracker_id, status_id, priority_id, assigned_to_id, subject, description, done_ratio, due_date, author_id, created_date, updated_date', 'safe', 'on' => 'search'),
@@ -99,6 +102,7 @@ class Issue extends CActiveRecord {
             'author_id' => 'Автор',
             'created_date' => 'Дата создания',
             'updated_date' => 'Дата обновления',
+            'tmpFiles' => 'Прикрепить файлы',
         );
     }
 
@@ -136,7 +140,7 @@ class Issue extends CActiveRecord {
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
-                'defaultOrder' => 'created_date DESC',
+                'defaultOrder' => 'status_id ASC, created_date DESC',
             ),
             'pagination' => array(
                 'pageSize' => 30,
@@ -204,5 +208,21 @@ class Issue extends CActiveRecord {
             return true;
         } else
             return false;
+    }
+
+    public function getFileFolder()
+    {
+        $folder = Yii::getPathOfAlias('webroot').'/uploads/issue/'.$this->id.'/';
+        if (is_dir($folder) == false)
+            mkdir($folder, 0755, true);
+        return $folder;
+    }
+
+    public function getOrigFilePath() {
+        return Yii::app()->baseUrl.'/uploads/issue/'.$this->id.'/';
+    }
+
+    public function getThumbFilePath() {
+        return Yii::app()->baseUrl.'/uploads/issue/'.$this->id.'/thumb_';
     }
 }

@@ -24,14 +24,12 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
             array(
                 'class' => 'bootstrap.widgets.TbButtonGroup',
                 'type' => 'primary',
-                // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                 'buttons' => array(
-                    array('label' => 'Закрыть', 'url' => array('/issue/close', 'id' => $model->id), 'htmlOptions' => array('class' => 'closeIssueBtn')),
-                    // this makes it split :)
+                    array('label' => 'Закрыть', 'url' => array('/issue/close', 'id' => $model->id), 'htmlOptions' => array('class' => 'closeIssueBtn getForm')),
                     array(
                         'items' => array(
-                            array('label' => 'Изменить статус', 'url' => array('/issue/changeStatus'), 'htmlOptions' => array('class' => 'changeStatusBtn')),
-                            array('label' => 'Исправить готовность', 'url' => array('/issue/changeDoneRatio')),
+                            array('label' => 'Изменить статус', 'url' => array('/issue/changeStatus', 'issueId' => $model->id), 'linkOptions' => array('class' => 'changeStatusBtn getForm')),
+                            array('label' => 'Изменить готовность', 'url' => array('/issue/changeDoneRatio', 'issueId' => $model->id), 'linkOptions' => array('class' => 'changeDoneRatioBtn getForm')),
                             '---',
                             array('label' => 'Редактировать', 'url' => array('/issue/update', 'id' => $model->id), 'visible' => ($model->author_id == Yii::app()->user->id) ? true : false),
                         )
@@ -137,9 +135,22 @@ $box = $this->beginWidget('bootstrap.widgets.TbBox', array(
     <hr/>
 
 <?php
-    $this->beginWidget('CMarkdown', array('purifyOutput'=>true));
-        echo $model->description;
-    $this->endWidget();
+$this->beginWidget('CHtmlPurifier');
+    echo $model->description;
+$this->endWidget();
+
+if ($model->files) {
+    foreach ($model->files as $file) {
+        echo l(
+            img($model->getThumbFilePath() . $file->filename, $model->subject, 140, 140, array('class' => 'img-polaroid', 'style' => 'margin-right: 10px;')),
+            $model->getOrigFilePath() . $file->filename,
+            array(
+                'class' => 'fancybox',
+                'rel' => 'gallery'.$model->id,
+            )
+        );
+    }
+}
 
 $this->endWidget();
 

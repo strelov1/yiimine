@@ -4,7 +4,7 @@ $(document).ready(function() {
         $('#project-form #Project_identifier').val(transText);
     });
 
-    $('.closeIssueBtn').click(function() {
+    $('.getForm').click(function() {
         $.get(
             $(this).attr('href'),
             function(data) {
@@ -25,5 +25,19 @@ $(document).ready(function() {
             }
         );
         return false;
+    });
+
+    $(".fancybox").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        helpers: {
+            title: {
+                type: 'outside'
+            },
+            thumbs: {
+                width: 50,
+                height: 50
+            }
+        }
     });
 });

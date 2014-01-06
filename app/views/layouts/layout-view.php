@@ -12,7 +12,8 @@
     <![endif]-->
 
     <?php
-    regJsFile(array('jquery.translit-0.1.3', 'main'))
+    regJsFile(array('jquery.translit-0.1.3', 'main'));
+    Yii::app()->clientScript->registerPackage('fancybox');
     ?>
 
     <!-- Le styles -->
