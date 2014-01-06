@@ -1110,3 +1110,21 @@ Stack trace:
 #3 {main}
 REQUEST_URI=/favicon.ico
 ---
+2014/01/06 04:38:59 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiimine.tbl_migration' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `tbl_migration`.
+2014/01/06 04:47:23 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'last_project_id' in 'users'. The SQL statement executed was: ALTER TABLE `users` CHANGE `last_project_id` `last_project_id` INT(11) UNSIGNED.
+2014/01/06 04:47:23 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'last_project_id' in 'users'. The SQL statement executed was: ALTER TABLE `users` CHANGE `last_project_id` `last_project_id` INT(11) UNSIGNED' in /home/yuriy/www/!framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/yuriy/www/!framework/db/CDbCommand.php(1417): CDbCommand->execute()
+#1 /home/yuriy/www/!framework/db/CDbMigration.php(329): CDbCommand->alterColumn('users', 'last_project_id', 'INT(11) UNSIGNE...')
+#2 /home/yuriy/www/yiimine.loc/app/migrations/m140106_044020_last_project_id_field.php(7): CDbMigration->alterColumn('users', 'last_project_id', 'INT(11) UNSIGNE...')
+#3 /home/yuriy/www/!framework/cli/commands/MigrateCommand.php(385): m140106_044020_last_project_id_field->up()
+#4 /home/yuriy/www/!framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp('m140106_044020_...')
+#5 [internal function]: MigrateCommand->actionUp(Array)
+#6 /home/yuriy/www/!framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#7 /home/yuriy/www/!framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#8 /home/yuriy/www/!framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#9 /home/yuriy/www/!framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#10 /home/yuriy/www/!framework/yiic.php(33): CApplication->run()
+#11 /home/yuriy/www/yiimine.loc/app/yiic.php(7): require_once('/home/yuriy/www...')
+#12 {main}
+---

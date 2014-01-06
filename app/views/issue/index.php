@@ -14,10 +14,10 @@ $this->menu = array(
     array('label' => 'Создать задачу', 'url' => $this->createUrl('create')),
 );
 
+$this->renderPartial('application.views.common._flashMessage');
+
 echo "<h1 style='float: left;'>Все задачи проекта {$model->project->title}</h1>";
 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . l('Создать', array('/issue/create'), array('class' => 'btn', 'style' => 'margin-top: 15px;'));
-
-$this->renderPartial('application.views.common._flashMessage');
 
 $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider'=>$model->search(),
@@ -76,6 +76,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array(
             'name' => 'created_date',
             'header' => 'Обновлено',
+            'filter' => false,
             'value' => function($data) {
                 if(empty($data->updated_date))
                     return date('d/m/Y H:i', strtotime($data->created_date));
