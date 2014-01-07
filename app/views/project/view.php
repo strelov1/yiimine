@@ -13,6 +13,10 @@ $this->renderPartial('application.views.common._flashMessage');
 
 <h1>Обзор проекта <?= $model->title; ?></h1>
 
+<a href="<?php echo url('issue/create'); ?>" class="btn"><i class="icon-plus"></i> Добавить задачу</a>
+<br/><br/>
+<?php $this->widget('IssueTableWidget', array('projectId' => $model->id)); ?>
+
 <p>Добавить на страницу:</p>
 <ul>
     <li>Кнопку "Добавить задачу"</li>
