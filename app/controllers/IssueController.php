@@ -4,6 +4,9 @@ class IssueController extends CommonController
 {
     public function actionIndex()
     {
+        $model = Project::model()->findByPk(User::getLastProjectId());
+        $this->pageTitle = 'Все задачи проекта ' . $model->title . ' - ' . Yii::app()->name;
+
         $this->render('index', array(
                 'model' => $this->listing('Issue', array('project_id' => User::getLastProjectId())),
             )
@@ -13,6 +16,8 @@ class IssueController extends CommonController
     public function actionCreate()
     {
         $project = $this->loadModel('Project', User::getLastProjectId());
+        $this->pageTitle = 'Создать задачу - ' . $project->title . ' - ' . Yii::app()->name;
+
         $model = new Issue();
         $model->project_id = $project->id;
         $model->tracker_id = Issue::TRACKER_BUG;
@@ -27,6 +32,8 @@ class IssueController extends CommonController
         $project = $this->loadModel('Project', User::getLastProjectId());
         $model = $this->loadModel('Issue', $id);
 
+        $this->pageTitle = 'Редактирование ' . $model->subject . ' - ' . Yii::app()->name;
+
         $this->_saveModel($model, 'обновлена');
 
         $this->render('update', array('model' => $model, 'project' => $project));
@@ -40,6 +47,8 @@ class IssueController extends CommonController
     public function actionView($id)
     {
         $model = $this->loadModel('Issue', $id);
+
+        $this->pageTitle = $model->subject . ' - ' . $model->project->title . ' - ' . Yii::app()->name;
 
         $comments = new CActiveDataProvider('IssueComment', array(
             'criteria'   => array(

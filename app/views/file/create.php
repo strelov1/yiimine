@@ -15,8 +15,6 @@ $this->menu = array(
     array('label' => 'Добавить файл', 'url' => $this->createUrl('create'), 'itemOptions' => array('class' => 'active')),
 );
 
-$this->pageTitle = 'Добавить файл';
-
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id' => 'file-form',
     'enableAjaxValidation' => false,

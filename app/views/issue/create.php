@@ -15,6 +15,4 @@ $this->menu = array(
     array('label' => 'Создать задачу', 'url' => $this->createUrl('create'), 'itemOptions' => array('class' => 'active')),
 );
 
-$this->pageTitle = 'Создать задачу';
-
 $this->renderPartial('_form', array('model' => $model));

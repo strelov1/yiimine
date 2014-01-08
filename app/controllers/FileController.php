@@ -4,6 +4,9 @@ class FileController extends CommonController
 {
     public function actionIndex()
     {
+        $model = Project::model()->findByPk(User::getLastProjectId());
+        $this->pageTitle = 'Все файлы проекта ' . $model->title . ' - ' . Yii::app()->name;
+
         $this->render('index', array(
             'model' => $this->listing('File', array('project_id' => User::getLastProjectId())),
         ));
@@ -13,6 +16,8 @@ class FileController extends CommonController
     {
         $project = $this->loadModel('Project', User::getLastProjectId());
         $model = new File();
+
+        $this->pageTitle = 'Добавить файл в ' . $project->title . ' - ' . Yii::app()->name;
 
         if (isset($_POST['File'])) {
             $model->attributes = $_POST['File'];

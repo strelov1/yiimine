@@ -1,12 +1,16 @@
 <?php
 class ProjectController extends CommonController {
     public function actionIndex() {
+        $this->pageTitle = 'Все проекты - ' . Yii::app()->name;
+
         $this->render('index', array(
             'model' => $this->listing('Project'),
         ));
     }
 
     public function actionCreate() {
+        $this->pageTitle = 'Создать проект - ' . Yii::app()->name;
+
         $model = new Project();
         $this->_saveModel($model, 'создан');
         $this->render('create', array('model' => $model));
@@ -14,6 +18,8 @@ class ProjectController extends CommonController {
 
     public function actionUpdate($id) {
         $model = $this->loadModel('Project', $id);
+        $this->pageTitle = 'Редактирование проекта ' . $model->title . ' - ' . Yii::app()->name;
+
         $this->_saveModel($model, 'обновлен');
         $this->render('update', array('model' => $model));
     }
@@ -26,6 +32,8 @@ class ProjectController extends CommonController {
         $model = Project::model()->findByAttributes(array('identifier' => $url));
         if(!$model)
             throw new CHttpException(404, 'Такой страницы не существует');
+
+        $this->pageTitle = $model->title . ' - ' . Yii::app()->name;
 
         User::setLastProjectId($model->id);
 
