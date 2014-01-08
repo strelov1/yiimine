@@ -9,11 +9,15 @@ class ImageUploadBehavior extends CActiveRecordBehavior {
     public $imageTitleField = '';
     private $_logo;
     private $_old_logo;
+    private $_filename = '';
+    private $_ext;
 
     public function beforeSave($event) {
         $this->_logo = CUploadedFile::getInstance($this->owner, $this->imageField);
-        if ($this->_logo)
-            $this->owner->{$this->imageField} = $this->getFileName() . '.jpg';
+        if ($this->_logo) {
+            $this->_ext = pathinfo($this->_logo, PATHINFO_EXTENSION);
+            $this->owner->{$this->imageField} = $this->getFileName() . '.' . $this->_ext;
+        }
         else
             $this->owner->{$this->imageField} = $this->_old_logo;
     }
@@ -23,11 +27,7 @@ class ImageUploadBehavior extends CActiveRecordBehavior {
 
         if ($this->_logo) {
             $folder = $this->getFolderPath();
-            $this->_logo->saveAs($folder . '/' . $this->getFileName() . '.jpg');
-            Yii::app()->image->load($folder . '/' . $this->owner->{$this->imageField})->
-                resize(300, 300, Image::WIDTH)->quality(80)->crop(300, 300)->
-                save($folder . '/thumb_' . $this->owner->{$this->imageField});
-            $this->createWM($folder . '/' . $this->getFileName() . '.jpg');
+            $this->_logo->saveAs($folder . '/' . $this->getFileName() . '.' . $this->_ext);
         }
     }
 
@@ -43,21 +43,14 @@ class ImageUploadBehavior extends CActiveRecordBehavior {
     }
 
     public function getFolderPath() {
-        $folder = Yii::app()->basePath . '/../' . $this->imagePath . '/';
-        if($this->owner instanceof Place) {
-            $folder .= $this->owner->getPrimaryKey();
-        } elseif($this->owner instanceof Room) {
-            $folder .= $this->owner->place_id . '/' . $this->owner->getPrimaryKey();
-        }
+        $folder = Yii::getPathOfAlias('webroot') . '/' . $this->imagePath . '/' . $this->owner->project_id;
         return $folder;
     }
 
     public function getFileName() {
-        $fileName = $this->owner->{$this->imageTitleField};
-        if($this->owner instanceof Room) {
-            $fileName = $this->owner->place->url . '-' . $fileName;
-        }
-        return $fileName;
+        if (empty($this->_filename))
+            $this->_filename = md5(rand(0, 9999));
+        return $this->_filename;
     }
 
     public function beforeDelete($event) {
@@ -77,12 +70,7 @@ class ImageUploadBehavior extends CActiveRecordBehavior {
     }
 
     private function getBaseImagePath() {
-        $url = Yii::app()->request->baseUrl . '/' . $this->imagePath . '/';
-        if($this->owner instanceof Place) {
-            $url .= $this->owner->getPrimaryKey() . '/';
-        } elseif($this->owner instanceof Room) {
-            $url .= $this->owner->place_id . '/' . $this->owner->getPrimaryKey() . '/';
-        }
+        $url = Yii::app()->baseUrl . '/' . $this->imagePath . '/' . $this->owner->project_id . '/';
         return $url;
     }
 
