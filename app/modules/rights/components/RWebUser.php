@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Rights web user class file.
  *
@@ -6,13 +7,18 @@
  * @copyright Copyright &copy; 2010 Christoffer Niska
  * @since 0.5
  */
-class RWebUser extends WebUser {
+
+Yii::import('application.modules.wiki.components.user.IWikiUser');
+
+class RWebUser extends WebUser implements IWikiUser
+{
     /**
      * Actions to be taken after logging in.
      * Overloads the parent method in order to mark superusers.
      * @param boolean $fromCookie whether the login is based on cookie.
      */
-    public function afterLogin($fromCookie) {
+    public function afterLogin($fromCookie)
+    {
         parent::afterLogin($fromCookie);
 
         // Mark the user as a superuser if necessary.
@@ -35,7 +41,8 @@ class RWebUser extends WebUser {
      * only within the same request.
      * @return boolean whether the operations can be performed by this user.
      */
-    public function checkAccess($operation, $params = array(), $allowCaching = true) {
+    public function checkAccess($operation, $params = array(), $allowCaching = true)
+    {
         // Allow superusers access implicitly and do CWebUser::checkAccess for others.
         return $this->isSuperuser === true ? true : parent::checkAccess($operation, $params, $allowCaching);
     }
@@ -43,21 +50,24 @@ class RWebUser extends WebUser {
     /**
      * @param boolean $value whether the user is a superuser.
      */
-    public function setIsSuperuser($value) {
+    public function setIsSuperuser($value)
+    {
         $this->setState('Rights_isSuperuser', $value);
     }
 
     /**
      * @return boolean whether the user is a superuser.
      */
-    public function getIsSuperuser() {
+    public function getIsSuperuser()
+    {
         return $this->getState('Rights_isSuperuser');
     }
 
     /**
      * @param array $value return url.
      */
-    public function setRightsReturnUrl($value) {
+    public function setRightsReturnUrl($value)
+    {
         $this->setState('Rights_returnUrl', $value);
     }
 
@@ -69,10 +79,23 @@ class RWebUser extends WebUser {
      * @return string the URL that the user should be redirected to
      * after updating an authorization item.
      */
-    public function getRightsReturnUrl($defaultUrl = null) {
+    public function getRightsReturnUrl($defaultUrl = null)
+    {
         if (($returnUrl = $this->getState('Rights_returnUrl')) !== null)
             $this->returnUrl = null;
 
         return $returnUrl !== null ? CHtml::normalizeUrl($returnUrl) : CHtml::normalizeUrl($defaultUrl);
+    }
+
+    public function getNameById($id)
+    {
+        $sql = 'SELECT username FROM users WHERE id=:id';
+        return Yii::app()->db->createCommand($sql)->queryScalar(array(':id' => (int)$id));
+    }
+
+    public function getEmailById($id)
+    {
+        $sql = 'SELECT email FROM users WHERE id=:id';
+        return Yii::app()->db->createCommand($sql)->queryScalar(array(':id' => (int)$id));
     }
 }

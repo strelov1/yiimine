@@ -1128,3 +1128,38 @@ Stack trace:
 #11 /home/yuriy/www/yiimine.loc/app/yiic.php(7): require_once('/home/yuriy/www...')
 #12 {main}
 ---
+2014/01/09 02:47:47 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiimine.wiki_migration' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `wiki_migration`.
+2014/01/09 03:52:52 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`yiimine`.`#sql-4ea_60`, CONSTRAINT `fk_project_id5` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE). The SQL statement executed was: ALTER TABLE `wiki_page` ADD CONSTRAINT `fk_project_id5` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE.
+2014/01/09 03:52:52 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`yiimine`.`#sql-4ea_60`, CONSTRAINT `fk_project_id5` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE). The SQL statement executed was: ALTER TABLE `wiki_page` ADD CONSTRAINT `fk_project_id5` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE' in /home/yuriy/www/!framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/yuriy/www/!framework/db/CDbCommand.php(1435): CDbCommand->execute()
+#1 /home/yuriy/www/!framework/db/CDbMigration.php(348): CDbCommand->addForeignKey('fk_project_id5', 'wiki_page', 'project_id', 'project', 'id', 'CASCADE', 'CASCADE')
+#2 /home/yuriy/www/yiimine.loc/app/modules/wiki/migrations/m140109_034747_alter_wiki_page.php(8): CDbMigration->addForeignKey('fk_project_id5', 'wiki_page', 'project_id', 'project', 'id', 'CASCADE', 'CASCADE')
+#3 /home/yuriy/www/!framework/cli/commands/MigrateCommand.php(385): m140109_034747_alter_wiki_page->up()
+#4 /home/yuriy/www/!framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp('m140109_034747_...')
+#5 [internal function]: MigrateCommand->actionUp(Array)
+#6 /home/yuriy/www/!framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#7 /home/yuriy/www/!framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#8 /home/yuriy/www/!framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#9 /home/yuriy/www/!framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#10 /home/yuriy/www/!framework/yiic.php(33): CApplication->run()
+#11 /home/yuriy/www/yiimine.loc/app/yiic.php(7): require_once('/home/yuriy/www...')
+#12 {main}
+---
+2014/01/09 03:55:23 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`yiimine`.`#sql-4ea_62`, CONSTRAINT `fk_project_id6` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE). The SQL statement executed was: ALTER TABLE `wiki_page` ADD CONSTRAINT `fk_project_id6` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE.
+2014/01/09 03:55:23 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`yiimine`.`#sql-4ea_62`, CONSTRAINT `fk_project_id6` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE). The SQL statement executed was: ALTER TABLE `wiki_page` ADD CONSTRAINT `fk_project_id6` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE' in /home/yuriy/www/!framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/yuriy/www/!framework/db/CDbCommand.php(1435): CDbCommand->execute()
+#1 /home/yuriy/www/!framework/db/CDbMigration.php(348): CDbCommand->addForeignKey('fk_project_id6', 'wiki_page', 'project_id', 'project', 'id', 'CASCADE', 'CASCADE')
+#2 /home/yuriy/www/yiimine.loc/app/modules/wiki/migrations/m140109_034747_alter_wiki_page.php(8): CDbMigration->addForeignKey('fk_project_id6', 'wiki_page', 'project_id', 'project', 'id', 'CASCADE', 'CASCADE')
+#3 /home/yuriy/www/!framework/cli/commands/MigrateCommand.php(385): m140109_034747_alter_wiki_page->up()
+#4 /home/yuriy/www/!framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp('m140109_034747_...')
+#5 [internal function]: MigrateCommand->actionUp(Array)
+#6 /home/yuriy/www/!framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#7 /home/yuriy/www/!framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#8 /home/yuriy/www/!framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#9 /home/yuriy/www/!framework/base/CApplication.php(180): CConsoleApplication->processRequest()
+#10 /home/yuriy/www/!framework/yiic.php(33): CApplication->run()
+#11 /home/yuriy/www/yiimine.loc/app/yiic.php(7): require_once('/home/yuriy/www...')
+#12 {main}
+---

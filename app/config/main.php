@@ -66,6 +66,11 @@ return array(
             'install' => false, // Whether to enable installer.
             'debug' => false,
         ),
+        'wiki' => array(
+            'userAdapter' => array(
+                'class' => 'RWebUser',
+            ),
+        ),
     ),
     // application components
     'components' => array(
