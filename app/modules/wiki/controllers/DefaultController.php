@@ -77,6 +77,15 @@ class DefaultController extends Controller
         }
     }
 
+    public function actionCreate()
+    {
+        $project = Project::model()->findByPk(User::getLastProjectId());
+        if (isset($_POST['wikiTitle'])) {
+            $this->redirect(array('edit', 'uid' => $_POST['wikiTitle']));
+        }
+        $this->render('create', array('project' => $project));
+    }
+
     /**
      * Handles page edit
      *
@@ -207,6 +216,8 @@ class DefaultController extends Controller
      */
     public function actionDiff($uid, $rev1, $rev2)
     {
+        $project = Project::model()->findByPk(User::getLastProjectId());
+
         $r1 = WikiPageRevision::model()->findByPk($rev1);
         if (!$r1) {
             throw new CHttpException(404);
@@ -221,6 +232,7 @@ class DefaultController extends Controller
             'r1' => $r1,
             'r2' => $r2,
             'uid' => $uid,
+            'project' =>  $project
         ));
     }
 
@@ -232,6 +244,7 @@ class DefaultController extends Controller
         $project = Project::model()->findByPk(User::getLastProjectId());
         $pages = WikiPage::model()->findAll(array(
             'order' => 'namespace, page_uid',
+            'condition' => 'project_id='.(int)User::getLastProjectId(),
         ));
         $this->render('page_index', array(
             'pages' => $pages,

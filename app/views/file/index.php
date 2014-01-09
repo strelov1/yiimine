@@ -8,7 +8,7 @@ $this->menu = array(
     array('label' => $model->project->title, 'itemOptions' => array('class' => 'nav-header')),
     array('label' => 'Обзор', 'url' => $this->createUrl('/project/view', array('url' => $model->project->identifier))),
     array('label' => 'Задачи', 'url' => $this->createUrl('/issue')),
-    array('label' => 'Wiki', 'url' => $this->createUrl('/wiki')),
+    array('label' => 'Wiki', 'url' => $this->createUrl('/wiki/default/pageIndex')),
     array('label' => 'Файлы', 'url' => $this->createUrl('/file'), 'itemOptions' => array('class' => 'active')),
     '---',
     array('label' => 'Добавить файл', 'url' => $this->createUrl('create')),

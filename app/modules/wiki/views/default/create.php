@@ -2,36 +2,32 @@
 $this->breadcrumbs = array(
     $project->title => array('/project/view', 'url' => $project->identifier),
     'Wiki' => array('/wiki/default/pageIndex'),
-    'Редактирование записи'
+    'Добавление записи'
 );
 
 $this->menu = array(
     array('label' => $project->title, 'itemOptions' => array('class' => 'nav-header')),
     array('label' => 'Обзор', 'url' => $this->createUrl('/project/view', array('url' => $project->identifier))),
     array('label' => 'Задачи', 'url' => $this->createUrl('/issue')),
-    array('label' => 'Wiki', 'url' => $this->createUrl('/wiki/default/pageIndex'), 'itemOptions' => array('class' => 'active')),
+    array('label' => 'Wiki', 'url' => $this->createUrl('/wiki/default/pageIndex')),
     array('label' => 'Файлы', 'url' => $this->createUrl('/file')),
     '---',
-    array('label' => 'Создать запись', 'url' => $this->createUrl('create')),
+    array('label' => 'Создать запись', 'url' => $this->createUrl('create'), 'itemOptions' => array('class' => 'active')),
 );
+?>
 
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id' => 'edit-page-form',
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'id' => 'create-wiki-form',
         'enableAjaxValidation' => false,
         'type' => 'horizontal',
     )
 ); ?>
 <fieldset>
-    <legend><?php echo CHtml::encode($page->getWikiUid()) ?></legend>
+    <legend><?php echo Yii::t('wiki', 'Type wiki title'); ?></legend>
     <div class="control-group">
+        <label class="control-label" for="wikiTitle"><?php echo Yii::t('wiki', 'Title'); ?></label>
         <div class="controls">
-            <?php echo CHtml::activeTextArea($page, 'content') ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <?php echo CHtml::label(Yii::t('wiki', 'Change summary'), CHtml::getIdByName('comment'), array('class' => 'control-label')); ?>
-        <div class="controls">
-            <?php echo CHtml::textField('comment', $comment) ?>
+            <input type="text" id="wikiTitle" name="wikiTitle" />
         </div>
     </div>
     <div class="form-actions">

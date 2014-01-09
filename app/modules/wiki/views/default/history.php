@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = array(
     $project->title => array('/project/view', 'url' => $project->identifier),
-    'Wiki' => array('/wiki'),
+    'Wiki' => array('/wiki/default/pageIndex'),
     'История'
 );
 
@@ -9,17 +9,17 @@ $this->menu = array(
     array('label' => $project->title, 'itemOptions' => array('class' => 'nav-header')),
     array('label' => 'Обзор', 'url' => $this->createUrl('/project/view', array('url' => $project->identifier))),
     array('label' => 'Задачи', 'url' => $this->createUrl('/issue')),
-    array('label' => 'Wiki', 'url' => $this->createUrl('/wiki'), 'itemOptions' => array('class' => 'active')),
+    array('label' => 'Wiki', 'url' => $this->createUrl('/wiki/default/pageIndex'), 'itemOptions' => array('class' => 'active')),
     array('label' => 'Файлы', 'url' => $this->createUrl('/file')),
     '---',
-    array('label' => 'Создать запись', 'url' => $this->createUrl('edit', array('uid' => 'index'))),
+    array('label' => 'Создать запись', 'url' => $this->createUrl('create')),
 );
 ?>
 
     <h1><?php echo CHtml::link(CHtml::encode($page->getWikiUid()), array('view', 'uid' => $page->getWikiUid())) ?> <?php echo Yii::t('wiki', 'version history') ?></h1>
 
 <?php echo CHtml::beginForm() ?>
-    <table>
+    <table class="table">
         <tr>
             <th></th>
             <th>Revision</th>
@@ -36,6 +36,6 @@ $this->menu = array(
         <?php endforeach ?>
     </table>
     <div>
-        <?php echo CHtml::submitButton(Yii::t('wiki', 'Show diff')) ?>
+        <?php echo CHtml::submitButton(Yii::t('wiki', 'Show diff'), array('class' => 'btn')); ?>
     </div>
 <?php echo CHtml::endForm() ?>
