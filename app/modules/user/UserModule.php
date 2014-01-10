@@ -9,7 +9,7 @@
  */
 
 class UserModule extends CWebModule {
-    public $layout = 'application.views.layouts.layout-admin';
+    public $layout = 'application.views.layouts.layout-main';
     /**
      * @var int
      * @desc items on page

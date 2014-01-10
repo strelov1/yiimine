@@ -62,14 +62,16 @@
                         'items' => array(
                             array('label' => 'Проекты', 'visible' => !Yii::app()->user->isGuest, 'items' => $this->projectMenu),
                             array('label' => 'Задачи', 'visible' => !Yii::app()->user->isGuest, 'items' => $this->issueMenu),
-                            array('label' => 'Пользователи', 'url' => array('/user/admin'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Права доступа', 'url' => array('/rights'), 'visible' => !Yii::app()->user->isGuest),
                         )
                     ),
                     array(
                         'class'=>'bootstrap.widgets.TbMenu',
                         'htmlOptions'=>array('class'=>'pull-right'),
                         'items'=>array(
+                            array('label' => 'Настройки', 'visible' => !Yii::app()->user->isGuest, 'items' => array(
+                                array('label' => 'Пользователи', 'url' => array('/user/admin'), 'visible' => !Yii::app()->user->isGuest),
+                                array('label' => 'Права доступа', 'url' => array('/rights'), 'visible' => !Yii::app()->user->isGuest),
+                            )),
                             array('label' => 'Войти', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
                             array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest)
                         ),

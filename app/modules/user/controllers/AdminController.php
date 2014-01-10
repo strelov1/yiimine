@@ -2,7 +2,6 @@
 
 class AdminController extends Controller {
     public $defaultAction = 'admin';
-    public $layout = 'application.views.layouts.layout-admin';
 
     private $_model;
 

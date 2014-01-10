@@ -61,7 +61,7 @@ return array(
             'flashSuccessKey' => 'RightsSuccess', // Key to use for setting success flash messages.
             'flashErrorKey' => 'RightsError', // Key to use for setting error flash messages.
             'baseUrl' => '/rights', // Base URL for Rights. Change if module is nested.
-            'layout' => 'application.views.layouts.layout-admin', // Layout to use for displaying Rights.
+            'layout' => 'application.views.layouts.layout-main', // Layout to use for displaying Rights.
             'appLayout' => 'application.views.layouts.main', // Application layout.
             'install' => false, // Whether to enable installer.
             'debug' => false,
