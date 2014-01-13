@@ -1,6 +1,6 @@
 <?php
 
-class m140109_034747_alter_wiki_page extends CDbMigration
+class m140113_030008_wiki_alter_wiki_page extends CDbMigration
 {
     public function up()
     {
