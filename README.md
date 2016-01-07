@@ -9,4 +9,7 @@ Redmine analog on yii2 framework
 
 That's all! Just go to the host, installer will setup database and you can login with login *admin* and password *admin*.
 
+Check the demo: [http://yiimine.by-dev.com](http://yiimine.by-dev.com)
+admin / admin
+
 P.S.: Yiimine has 2 language support: RU and EN (You can change it in application config/web.php).
