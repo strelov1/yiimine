@@ -4,7 +4,7 @@ Redmine analog on yii2 framework
 ## Installation
 
 * php PATH_TO_COMPOSER.PHAR/composer.phar install
-* chmod 777 -R rbac && chmod 777 runtime && cd web && chmod 777 assets && chmod 777 uploads
+* chmod 775 -R rbac && chmod 775 runtime && cd web && chmod 775 assets && chmod 775 uploads
 * Set the database connection in config/db.php and DON'T forget create database!
 * Set the appropriate params in config/params.php file
 
