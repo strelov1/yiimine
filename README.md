@@ -1,4 +1,4 @@
 yiimine
 =======
 
-Redmine analog on yii framework
+Redmine analog on yii2 framework
