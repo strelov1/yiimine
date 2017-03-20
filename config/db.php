@@ -3,8 +3,8 @@
 return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=mysql;dbname=yiimine',
-    'username' => (YII_ENV == 'dev' ? 'dev' : 'yiimine'),
-    'password' => (YII_ENV == 'dev' ? '' : 'kjctFEjCFk'),
+    'username' => 'yiimine',
+    'password' => 'yiimine_pass',
     'charset' => 'utf8',
     'enableQueryCache' => true,
     'enableSchemaCache' => true,
